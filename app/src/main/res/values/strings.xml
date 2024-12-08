@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">star</string>
+    <string name="tv_question">星空一覧</string>
+    <string name="tv_answer1">東から</string>
+    <string name="tv_answer2">西から</string>
+    <string name="toast_correct">正解です！</string>
+    <string name="toast_incorrect">不正解です</string>
+</resources>

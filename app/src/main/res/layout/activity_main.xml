@@ -25,7 +25,9 @@
         android:layout_height="590dp"
         android:layout_gravity="center"
         android:columnCount="3"
-        android:rowCount="5"></GridLayout>
+        android:rowCount="5">
+
+    </GridLayout>
 
 
     <ImageButton

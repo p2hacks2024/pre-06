@@ -2,9 +2,11 @@ package com.example.star;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,33 +17,37 @@ public class MainActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+            GridLayout gridLayout = findViewById(R.id.gridLayout);
+            int totalButtons = 15;
 
-        GridLayout gridLayout = findViewById(R.id.gridLayout);
-        int totalButtons = 15;
+            //初期画面配列作成
+            for(int i = 0; i<totalButtons; i++){
+                ImageButton imageButton = new ImageButton(this);
+                imageButton.setLayoutParams(new ViewGroup.LayoutParams(350,350));
+                imageButton.setImageResource(R.drawable.demo1);
+                imageButton.setId(View.generateViewId());
+                imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageButton.setOnClickListener(new View.OnClickListener() {
 
-        //初期画面配列作成
-
-        for(int i = 0; i<totalButtons; i++){
-            ImageButton imageButton = new ImageButton(this);
-
-
-            imageButton.setLayoutParams(new ViewGroup.LayoutParams(350,350));
-            imageButton.setImageResource(R.drawable.demo1);
-            imageButton.setId(View.generateViewId());
-            imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-            imageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                    @Override
+                    public void onClick(View v) {
                     // ボタンがクリックされたときの処理をここに記述
                     Toast.makeText(MainActivity.this, "Button clicked!", Toast.LENGTH_SHORT).show();
-                }
+                    }
 
+                });
+                gridLayout.addView(imageButton);
+
+            }
+            Button nextButton = (Button)findViewById(R.id.button3);
+            nextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,SubActivity.class);
+                startActivity(intent);
+            }
         });
-            gridLayout.addView(imageButton);
-        }
 
-        }
+    }
     }
 
 

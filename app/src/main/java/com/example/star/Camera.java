@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
+import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,7 +17,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
+
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
@@ -99,6 +100,7 @@ public class Camera extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     takePicture();
+
                 }
             });
         if(btnGallery != null)
@@ -207,6 +209,8 @@ public class Camera extends AppCompatActivity {
                 folder = new File(folderName);
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String imageFileName = "IMG_" + timeStamp + ".jpg";
+
+
                 file = new File(getExternalFilesDir(folderName), "/" + imageFileName);
                 if (!folder.exists()) {
                     folder.mkdirs();
@@ -240,6 +244,9 @@ public class Camera extends AppCompatActivity {
                         } finally {
                             if (null != output) {
                                 output.close();
+                                //星空画面に遷移
+                                Intent intent = new Intent(Camera.this, star_sky.class);
+                                startActivity(intent);
                             }
                         }
                     }
@@ -273,6 +280,7 @@ public class Camera extends AppCompatActivity {
             }
         }
     }
+
 
     private static boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();

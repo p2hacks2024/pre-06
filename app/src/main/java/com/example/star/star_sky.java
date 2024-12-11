@@ -39,11 +39,20 @@ public class star_sky extends AppCompatActivity {
         });
         ImageButton toMemo = (ImageButton) findViewById(R.id.imageButton3);
         toMemo.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                Intent intent = new Intent(star_sky.this,Memo.class);
-                startActivity(intent);
+                String photoFileName = "sample_photo.jpg";
+                String memoFileName = "sample_memo.txt";
+                openPhotoActivity(photoFileName, memoFileName);
             }
         });
 
+    }
+
+    private void openPhotoActivity(String photoFileName, String memoFileName) {
+        Intent intent = new Intent(star_sky.this, Memo.class);
+        intent.putExtra("photoFileName", photoFileName);
+        intent.putExtra("memoFileName", memoFileName);
+        startActivity(intent);
     }
 }

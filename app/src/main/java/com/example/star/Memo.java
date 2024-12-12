@@ -3,9 +3,11 @@ package com.example.star;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,7 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Memo extends AppCompatActivity {
@@ -23,7 +27,6 @@ public class Memo extends AppCompatActivity {
     ImageView imageView;
     EditText editTextNote;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +43,13 @@ public class Memo extends AppCompatActivity {
         });
 
         goToTitleButton.setOnClickListener(v -> {
+            saveMemo();
             Intent intent = new Intent(Memo.this, star_sky.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
+
+        loadMemo(); // ここでメモを読み込みます
     }
 
     @Override
@@ -55,8 +61,48 @@ public class Memo extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
-                Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "画像の読み込みに失敗しました", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void saveMemo() {
+        String note = editTextNote.getText().toString();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] image = stream.toByteArray();
+
+        try {
+            FileOutputStream noteStream = openFileOutput("note.txt", Context.MODE_PRIVATE);
+            noteStream.write(note.getBytes());
+            noteStream.close();
+
+            FileOutputStream imageStream = openFileOutput("image.png", Context.MODE_PRIVATE);
+            imageStream.write(image);
+            imageStream.close();
+
+            Toast.makeText(this, "メモを保存しました", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(this, "メモの保存に失敗しました", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loadMemo() {
+        try {
+            FileInputStream noteStream = openFileInput("note.txt");
+            byte[] noteBytes = new byte[noteStream.available()];
+            noteStream.read(noteBytes);
+            noteStream.close();
+            String note = new String(noteBytes);
+            editTextNote.setText(note);
+
+            FileInputStream imageStream = openFileInput("image.png");
+            Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+            imageStream.close();
+            imageView.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            Toast.makeText(this, "メモの読み込みに失敗しました", Toast.LENGTH_SHORT).show();
         }
     }
 }

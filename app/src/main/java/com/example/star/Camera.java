@@ -17,6 +17,8 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Context;
+import android.widget.RelativeLayout;
 
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
@@ -57,13 +59,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
-public class Camera extends AppCompatActivity {
+public class Camera extends AppCompatActivity{
     private static final String TAG = "AndroidCameraApi";
+
     private Button btnTake;
     private Button btnGallery;
     private TextureView textureView;
+    private RelativeLayout buttonContainer;
+    private Random random = new Random();
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
+    private Context context;
 
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -93,8 +100,10 @@ public class Camera extends AppCompatActivity {
         textureView = findViewById(R.id.texture);
         if(textureView != null)
             textureView.setSurfaceTextureListener(textureListener);
+
         btnTake = findViewById(R.id.btnTake);
         btnGallery = findViewById(R.id.btnGallery);
+        //buttonContainer = findViewById(R.id.buttonContainer);
         if(btnTake != null)
             btnTake.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -244,9 +253,19 @@ public class Camera extends AppCompatActivity {
                         } finally {
                             if (null != output) {
                                 output.close();
+                                //PlusStar.addNewButton(Camera.this, buttonContainer);
                                 //星空画面に遷移
                                 Intent intent = new Intent(Camera.this, star_sky.class);
-                                startActivity(intent);
+                                intent.putExtra("buttonAdded",true);
+                                setResult(AppCompatActivity.RESULT_OK,intent);
+                                //startActivity(intent);
+                                finish();
+
+
+
+
+
+
                             }
                         }
                     }
@@ -413,6 +432,13 @@ public class Camera extends AppCompatActivity {
         stopBackgroundThread();
         super.onPause();
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK); // 戻り値を設定
+        super.onBackPressed();
+    }
+
 
 
 }

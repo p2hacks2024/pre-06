@@ -56,11 +56,13 @@ public class star_sky extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(star_sky.this,MainActivity.class);
                 startActivity(intent);
+
             }
         });
         ImageButton toCamera = (ImageButton) findViewById(R.id.imageButton2);
         toCamera.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                addNewButton();
                 Intent intent = new Intent(star_sky.this,Camera.class);
                 startActivity(intent);
             }

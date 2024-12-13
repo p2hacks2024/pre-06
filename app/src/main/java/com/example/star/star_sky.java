@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -50,7 +51,11 @@ public class star_sky extends AppCompatActivity {
         memoIdCounter = prefs.getInt(MEMO_ID_COUNTER_KEY, 0);
 
         Button addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(v -> addNewButton());
+        addButton.setOnClickListener(v -> {
+            // URIが必要な場合はnullを渡すか、別の適切な処理を行う
+            addNewButton(null);
+        });
+
 
         ImageButton toFile01 = findViewById(R.id.cameraButton);
         toFile01.setOnClickListener(new View.OnClickListener() {
@@ -64,45 +69,45 @@ public class star_sky extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             String photoUriString = data.getStringExtra("PHOTO_URI");
             if (photoUriString != null) {
                 Uri photoUri = Uri.parse(photoUriString);
-                // URIを使用して必要な処理を行う（例：画像を表示など）
-                addNewButton(); // ボタンを追加する
+                addNewButton(photoUri);
             }
         }
     }
 
-
-    private void addNewButton() {
-        // 新しい画像ボタンを作成
+    private void addNewButton(Uri photoUri) {
         ImageButton newImageButton = new ImageButton(this);
         newImageButton.setImageResource(R.drawable.demo);
 
-        // 画像ボタンのレイアウトパラメータを設定
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 100,  // 幅を100ピクセルに設定
                 100   // 高さを100ピクセルに設定
         );
-
-        // ボタンの位置を重ならないようにランダムに設定
         int[] position = findNonOverlappingPosition(params.width, params.height);
         params.leftMargin = position[0];
         params.topMargin = position[1];
         newImageButton.setLayoutParams(params);
 
-        // 新しいボタンにクリックイベントを設定
         memoIdCounter++;
         final int memoId = memoIdCounter;
-        newImageButton.setOnClickListener(v -> openMemoScreen(memoId));
+        newImageButton.setOnClickListener(v -> openMemoScreen(memoId, photoUri));
 
-        // ボタンをコンテナに追加
         buttonContainer.addView(newImageButton);
         saveButtonInfo(position[0], position[1], memoId);
     }
+
+    private void openMemoScreen(int memoId, Uri photoUri) {
+        Intent intent = new Intent(star_sky.this, Memo.class);
+        intent.putExtra("MEMO_ID", memoId);
+        intent.putExtra("PHOTO_URI", photoUri.toString());
+        startActivity(intent);
+    }
+
 
     private int[] findNonOverlappingPosition(int buttonWidth, int buttonHeight) {
         int maxWidth = buttonContainer.getWidth() - buttonWidth;

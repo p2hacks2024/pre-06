@@ -38,8 +38,17 @@ public class Memo extends AppCompatActivity {
         Button selectImageButton = findViewById(R.id.selectImageButton);
         Button goToTitleButton = findViewById(R.id.goToTitleButton);
 
-        // メモIDを取得
         memoId = getIntent().getIntExtra("MEMO_ID", -1);
+        String photoUriString = getIntent().getStringExtra("PHOTO_URI");
+        if (photoUriString != null) {
+            Uri photoUri = Uri.parse(photoUriString);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                Toast.makeText(this, "画像の読み込みに失敗しました", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         selectImageButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -53,8 +62,9 @@ public class Memo extends AppCompatActivity {
             startActivity(intent);
         });
 
-        loadMemo(); // ここでメモを読み込みます
+        loadMemo();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

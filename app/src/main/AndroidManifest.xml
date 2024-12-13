@@ -29,6 +29,12 @@
             android:name=".Memo"
             android:exported="false" />
         <activity
+            android:name=".HowToUse"
+            android:exported="false" />
+        <activity
+            android:name=".File"
+            android:exported="false" />
+        <activity
             android:name=".Camera"
             android:exported="false" />
         <activity

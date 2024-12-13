@@ -16,17 +16,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +28,7 @@ import java.util.Date;
 public class Camera extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private Uri photoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +79,15 @@ public class Camera extends AppCompatActivity {
 
                 // Save the image using MediaStore
                 saveImageToGallery(imageBitmap);
+
+                // Pass the photo URI to the next activity
+                if (photoUri != null) {
+                    Intent intent = new Intent(Camera.this, Memo.class);
+                    intent.putExtra("PHOTO_URI", photoUri.toString());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "Failed to retrieve photo URL.", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(this, "Failed to capture image.", Toast.LENGTH_SHORT).show();
             }
@@ -109,6 +113,7 @@ public class Camera extends AppCompatActivity {
                     out.flush();
                     out.close();
                     Toast.makeText(this, "Image saved successfully: " + uri, Toast.LENGTH_SHORT).show();
+                    photoUri = uri;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -119,28 +124,16 @@ public class Camera extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        // requestCode は、どのリクエストに対する応答かを識別します
         if (requestCode == 1) {
-
-            // grantResults 配列は、各権限のリクエスト結果を含みます
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                // ユーザーが権限を許可した場合の処理
-                // ここに権限が許可された場合の処理を追加します
                 Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
             } else {
-
-                // ユーザーが権限を拒否した場合の処理
-                // ここに権限が拒否された場合の処理を追加します
                 Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
 }

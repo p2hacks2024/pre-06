@@ -1,5 +1,6 @@
 package com.example.star;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -67,6 +68,13 @@ public class star_sky extends AppCompatActivity {
         });
         ImageButton toMemo = (ImageButton) findViewById(R.id.imageButton3);
         toMemo.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(star_sky.this,Memo.class);
+                startActivity(intent);
+            }
+        });
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageButton toView = (ImageButton) findViewById(R.id.imageButton5);
+        toView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(star_sky.this,Memo.class);
                 startActivity(intent);

@@ -49,6 +49,15 @@ public class Memo extends AppCompatActivity {
             startActivity(intent);
         });
 
+        ImageView imageView = findViewById(R.id.imageView);
+
+        // Get the photo URI from the intent
+        String photoUriString = getIntent().getStringExtra("PHOTO_URI");
+        if (photoUriString != null) {
+            Uri photoUri = Uri.parse(photoUriString);
+            imageView.setImageURI(photoUri);
+        }
+
         loadMemo(); // ここでメモを読み込みます
     }
 

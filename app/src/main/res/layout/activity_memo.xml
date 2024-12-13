@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="344dp"
+        android:layout_height="347dp"
         android:layout_gravity="center"
         android:contentDescription="Selected Image" />
 
@@ -24,8 +24,8 @@
         android:id="@+id/selectImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Image"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:text="Select Image" />
 
     <Button
         android:id="@+id/goToTitleButton"

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Button TapToStart = (Button) findViewById(R.id.tap_to_start);
+        ImageButton TapToStart = (ImageButton) findViewById(R.id.tap_to_start);
         TapToStart.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, File.class);
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button HowToUse = (Button) findViewById(R.id.how_to_use);
+        ImageButton HowToUse = (ImageButton) findViewById(R.id.how_to_use);
         HowToUse.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, HowToUse.class);

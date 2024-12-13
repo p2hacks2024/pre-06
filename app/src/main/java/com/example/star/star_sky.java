@@ -52,11 +52,12 @@ public class star_sky extends AppCompatActivity {
         //Button addButton = findViewById(R.id.addButton);
         //addButton.setOnClickListener(v -> addNewButton(null));  // URI引数なしで呼び出し
 
-        Button addButton = (Button) findViewById(R.id.addButton);
+        ImageButton addButton = (ImageButton) findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(star_sky.this, Animation.class);
-                startActivity(intent);
+               // Intent intent = new Intent(star_sky.this, Animation.class);
+                // startActivity(intent);
+                addNewButton(null);
             }
         });
 
@@ -90,11 +91,12 @@ public class star_sky extends AppCompatActivity {
 
     private void addNewButton(@Nullable Uri photoUri) {
         ImageButton newImageButton = new ImageButton(this);
-        newImageButton.setImageResource(R.drawable.demo); // デフォルトの画像
+        newImageButton.setImageResource(R.drawable.star); // デフォルトの画像
+        newImageButton.setBackgroundColor(android.graphics.Color.TRANSPARENT);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                100,  // 幅を100ピクセルに設定
-                100   // 高さを100ピクセルに設定
+                300,  // 幅を100ピクセルに設定
+                300   // 高さを100ピクセルに設定
         );
 
         int[] position = findNonOverlappingPosition(params.width, params.height);
@@ -170,17 +172,18 @@ public class star_sky extends AppCompatActivity {
             int memoId = prefs.getInt("button_memo_id_" + i, i);
 
             ImageButton newImageButton = new ImageButton(this);
-            newImageButton.setImageResource(R.drawable.demo);
+            newImageButton.setImageResource(R.drawable.star);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                    100,  // 幅を100ピクセルに設定
-                    100   // 高さを100ピクセルに設定
+                    300,  // 幅を100ピクセルに設定
+                    300   // 高さを100ピクセルに設定
             );
             params.leftMargin = leftMargin;
             params.topMargin = topMargin;
             newImageButton.setLayoutParams(params);
 
             newImageButton.setOnClickListener(v -> openMemoScreen(memoId, null));
+            newImageButton.setBackgroundColor(android.graphics.Color.TRANSPARENT);
 
             buttonContainer.addView(newImageButton);
 

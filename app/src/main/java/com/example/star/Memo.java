@@ -36,7 +36,8 @@ public class Memo extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         editTextNote = findViewById(R.id.editTextNote);
         Button selectImageButton = findViewById(R.id.selectImageButton);
-        Button goToTitleButton = findViewById(R.id.goToTitleButton);
+        Button kanryouButton = findViewById(R.id.kanryouButton);
+        Button modoruButton = findViewById(R.id.modoruButton);
 
         // メモIDと写真のURIを取得
         memoId = getIntent().getIntExtra("MEMO_ID", -1);
@@ -56,10 +57,19 @@ public class Memo extends AppCompatActivity {
             startActivityForResult(intent, PICK_IMAGE);
         });
 
-        goToTitleButton.setOnClickListener(v -> {
+        kanryouButton.setOnClickListener(v -> {
             saveMemo();
             Intent intent = new Intent(Memo.this, star_sky.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
+
+        modoruButton.setOnClickListener(v -> {
+            saveMemo();
+            // 同じメモ画面に遷移するが、別の動作（例：特定のデータを送るなど）を追加
+            Intent intent = new Intent(Memo.this, star_sky.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            // ここに追加の動作を設定できます
             startActivity(intent);
         });
 

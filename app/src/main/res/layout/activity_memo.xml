@@ -28,9 +28,17 @@
         android:text="Select Image" />
 
     <Button
-        android:id="@+id/goToTitleButton"
+        android:id="@+id/kanryouButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to Title"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:text="完了" />
+
+    <Button
+        android:id="@+id/modoruButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="戻る" />
+
 </LinearLayout>

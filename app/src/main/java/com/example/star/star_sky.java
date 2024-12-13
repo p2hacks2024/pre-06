@@ -71,7 +71,10 @@ public class star_sky extends AppCompatActivity {
 
             if (photoUriString != null && memoId != -1) {
                 Uri photoUri = Uri.parse(photoUriString);
-                addNewButton(photoUri);
+                addNewButton(photoUri);  // ボタンの追加
+
+                // メモ画面に遷移する
+                openMemoScreen(memoId, photoUri);
             }
         }
     }
@@ -90,8 +93,7 @@ public class star_sky extends AppCompatActivity {
         params.topMargin = position[1];
         newImageButton.setLayoutParams(params);
 
-        memoIdCounter++;
-        final int memoId = memoIdCounter;
+        final int memoId = memoIdCounter; // 更新前のカウンター値を使う
         newImageButton.setOnClickListener(v -> openMemoScreen(memoId, photoUri));
 
         buttonContainer.addView(newImageButton);

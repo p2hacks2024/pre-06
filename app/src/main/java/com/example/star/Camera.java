@@ -103,6 +103,7 @@ public class Camera extends AppCompatActivity {
                     // memoIdCounterをインクリメント
                     memoIdCounter++;
 
+                    // 結果を返すIntent
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("PHOTO_URI", photoUri.toString());
                     resultIntent.putExtra("MEMO_ID", memoIdCounter);

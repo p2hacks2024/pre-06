@@ -38,7 +38,7 @@ public class Memo extends AppCompatActivity {
         Button selectImageButton = findViewById(R.id.selectImageButton);
         Button goToTitleButton = findViewById(R.id.goToTitleButton);
 
-        // メモIDを取得
+        // メモIDと写真のURIを取得
         memoId = getIntent().getIntExtra("MEMO_ID", -1);
         String photoUriString = getIntent().getStringExtra("PHOTO_URI");
         if (photoUriString != null) {

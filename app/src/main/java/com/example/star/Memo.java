@@ -1,8 +1,5 @@
 package com.example.star;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,6 +26,7 @@ public class Memo extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     ImageView imageView;
     EditText editTextNote;
+    private int memoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,9 @@ public class Memo extends AppCompatActivity {
         editTextNote = findViewById(R.id.editTextNote);
         Button selectImageButton = findViewById(R.id.selectImageButton);
         Button goToTitleButton = findViewById(R.id.goToTitleButton);
+
+        // メモIDを取得
+        memoId = getIntent().getIntExtra("MEMO_ID", -1);
 
         selectImageButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -48,15 +52,6 @@ public class Memo extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
-
-        ImageView imageView = findViewById(R.id.imageView);
-
-        // Get the photo URI from the intent
-        String photoUriString = getIntent().getStringExtra("PHOTO_URI");
-        if (photoUriString != null) {
-            Uri photoUri = Uri.parse(photoUriString);
-            imageView.setImageURI(photoUri);
-        }
 
         loadMemo(); // ここでメモを読み込みます
     }
@@ -83,11 +78,12 @@ public class Memo extends AppCompatActivity {
         byte[] image = stream.toByteArray();
 
         try {
-            FileOutputStream noteStream = openFileOutput("note.txt", Context.MODE_PRIVATE);
+            // メモIDを使ってファイル名を一意にする
+            FileOutputStream noteStream = openFileOutput("note_" + memoId + ".txt", Context.MODE_PRIVATE);
             noteStream.write(note.getBytes());
             noteStream.close();
 
-            FileOutputStream imageStream = openFileOutput("image.png", Context.MODE_PRIVATE);
+            FileOutputStream imageStream = openFileOutput("image_" + memoId + ".png", Context.MODE_PRIVATE);
             imageStream.write(image);
             imageStream.close();
 
@@ -99,14 +95,15 @@ public class Memo extends AppCompatActivity {
 
     private void loadMemo() {
         try {
-            FileInputStream noteStream = openFileInput("note.txt");
+            // メモIDを使ってファイル名を一意にする
+            FileInputStream noteStream = openFileInput("note_" + memoId + ".txt");
             byte[] noteBytes = new byte[noteStream.available()];
             noteStream.read(noteBytes);
             noteStream.close();
             String note = new String(noteBytes);
             editTextNote.setText(note);
 
-            FileInputStream imageStream = openFileInput("image.png");
+            FileInputStream imageStream = openFileInput("image_" + memoId + ".png");
             Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
             imageStream.close();
             imageView.setImageBitmap(bitmap);

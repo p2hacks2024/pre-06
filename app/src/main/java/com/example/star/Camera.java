@@ -108,6 +108,11 @@ public class Camera extends AppCompatActivity {
                     finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                     out.flush();
                     out.close();
+
+                    //画面遷移　星に移動
+                    Intent intent = new Intent(Camera.this,star_sky.class);
+                    startActivity(intent);
+
                     Toast.makeText(this, "Image saved successfully: " + uri, Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -31,6 +32,9 @@ public class star_sky extends AppCompatActivity {
     private static final String MEMO_ID_COUNTER_KEY = "memo_id_counter";
     private int memoIdCounter;
 
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +52,30 @@ public class star_sky extends AppCompatActivity {
         Button addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(v -> addNewButton());
 
+        ImageButton toFile01 = findViewById(R.id.cameraButton);
+        toFile01.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(star_sky.this, Camera.class);
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+            }
+        });
+
         loadButtons();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            String photoUriString = data.getStringExtra("PHOTO_URI");
+            if (photoUriString != null) {
+                Uri photoUri = Uri.parse(photoUriString);
+                // URIを使用して必要な処理を行う（例：画像を表示など）
+                addNewButton(); // ボタンを追加する
+            }
+        }
+    }
+
 
     private void addNewButton() {
         // 新しい画像ボタンを作成

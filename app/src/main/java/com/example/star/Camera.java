@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,13 +33,8 @@ public class Camera extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button captureButton = findViewById(R.id.capture_button);
-        captureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchTakePictureIntent();
-            }
-        });
+        Button captureButton = findViewById(R.id.capture_button);
+        captureButton.setOnClickListener(v -> dispatchTakePictureIntent());
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -50,13 +43,28 @@ public class Camera extends AppCompatActivity {
                     1);
         }
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button backButton = findViewById(R.id.backButton);
+        Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(Camera.this, star_sky.class);
             startActivity(intent);
         });
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    // 既存のコードに加え、以下のメソッドを追加
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -72,22 +80,10 @@ public class Camera extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-
             if (imageBitmap != null) {
                 ImageView imageView = findViewById(R.id.image_view);
                 imageView.setImageBitmap(imageBitmap);
-
-                // Save the image using MediaStore
                 saveImageToGallery(imageBitmap);
-
-                // Pass the photo URI to the next activity
-                if (photoUri != null) {
-                    Intent intent = new Intent(Camera.this, Memo.class);
-                    intent.putExtra("PHOTO_URI", photoUri.toString());
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "Failed to retrieve photo URL.", Toast.LENGTH_SHORT).show();
-                }
             } else {
                 Toast.makeText(this, "Failed to capture image.", Toast.LENGTH_SHORT).show();
             }
@@ -97,11 +93,9 @@ public class Camera extends AppCompatActivity {
     private void saveImageToGallery(Bitmap finalBitmap) {
         ContentValues values = new ContentValues();
         String fileName = "Image-" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpg";
-
-        // 保存先を定義
         values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES); // Pictures フォルダに保存
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
 
         Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
@@ -112,8 +106,12 @@ public class Camera extends AppCompatActivity {
                     finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                     out.flush();
                     out.close();
-                    Toast.makeText(this, "Image saved successfully: " + uri, Toast.LENGTH_SHORT).show();
                     photoUri = uri;
+
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("PHOTO_URI", photoUri.toString());
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -124,16 +122,4 @@ public class Camera extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 }

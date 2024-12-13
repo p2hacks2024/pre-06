@@ -38,6 +38,7 @@ public class Memo extends AppCompatActivity {
         Button selectImageButton = findViewById(R.id.selectImageButton);
         Button goToTitleButton = findViewById(R.id.goToTitleButton);
 
+        // メモIDを取得
         memoId = getIntent().getIntExtra("MEMO_ID", -1);
         String photoUriString = getIntent().getStringExtra("PHOTO_URI");
         if (photoUriString != null) {
@@ -62,9 +63,8 @@ public class Memo extends AppCompatActivity {
             startActivity(intent);
         });
 
-        loadMemo();
+        loadMemo(); // ここでメモを読み込みます
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

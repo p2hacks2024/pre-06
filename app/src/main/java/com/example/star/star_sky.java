@@ -32,62 +32,59 @@ public class star_sky extends AppCompatActivity {
     private static final String BUTTON_COUNT_KEY = "button_count";
     private static final String MEMO_ID_COUNTER_KEY = "memo_id_counter";
     private int memoIdCounter;
-
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star_sky);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        buttonContainer = findViewById(R.id.buttonContainer);
 
+        buttonContainer = findViewById(R.id.buttonContainer);
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         memoIdCounter = prefs.getInt(MEMO_ID_COUNTER_KEY, 0);
 
         Button addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(v -> {
-            // URIが必要な場合はnullを渡すか、別の適切な処理を行う
-            addNewButton(null);
-        });
-
+        addButton.setOnClickListener(v -> addNewButton(null));  // URI引数なしで呼び出し
 
         ImageButton toFile01 = findViewById(R.id.cameraButton);
-        toFile01.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(star_sky.this, Camera.class);
-                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-            }
+        toFile01.setOnClickListener(v -> {
+            Intent intent = new Intent(star_sky.this, Camera.class);
+            intent.putExtra("MEMO_ID_COUNTER", memoIdCounter);
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         });
 
         loadButtons();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             String photoUriString = data.getStringExtra("PHOTO_URI");
-            if (photoUriString != null) {
+            int memoId = data.getIntExtra("MEMO_ID", -1);
+
+            if (photoUriString != null && memoId != -1) {
                 Uri photoUri = Uri.parse(photoUriString);
                 addNewButton(photoUri);
             }
         }
     }
 
-    private void addNewButton(Uri photoUri) {
+    private void addNewButton(@Nullable Uri photoUri) {
         ImageButton newImageButton = new ImageButton(this);
-        newImageButton.setImageResource(R.drawable.demo);
+        newImageButton.setImageResource(R.drawable.demo); // デフォルトの画像
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 100,  // 幅を100ピクセルに設定
                 100   // 高さを100ピクセルに設定
         );
+
         int[] position = findNonOverlappingPosition(params.width, params.height);
         params.leftMargin = position[0];
         params.topMargin = position[1];
@@ -101,13 +98,14 @@ public class star_sky extends AppCompatActivity {
         saveButtonInfo(position[0], position[1], memoId);
     }
 
-    private void openMemoScreen(int memoId, Uri photoUri) {
+    private void openMemoScreen(int memoId, @Nullable Uri photoUri) {
         Intent intent = new Intent(star_sky.this, Memo.class);
         intent.putExtra("MEMO_ID", memoId);
-        intent.putExtra("PHOTO_URI", photoUri.toString());
+        if (photoUri != null) {
+            intent.putExtra("PHOTO_URI", photoUri.toString());
+        }
         startActivity(intent);
     }
-
 
     private int[] findNonOverlappingPosition(int buttonWidth, int buttonHeight) {
         int maxWidth = buttonContainer.getWidth() - buttonWidth;
@@ -120,7 +118,6 @@ public class star_sky extends AppCompatActivity {
             topMargin = random.nextInt(maxHeight);
             isOverlapping = false;
 
-            // 既存のボタンと重なりを確認
             for (int i = 0; i < buttonContainer.getChildCount(); i++) {
                 View child = buttonContainer.getChildAt(i);
                 int childLeft = child.getLeft();
@@ -128,7 +125,6 @@ public class star_sky extends AppCompatActivity {
                 int childRight = childLeft + child.getWidth();
                 int childBottom = childTop + child.getHeight();
 
-                // ボタンが重なっているか確認
                 if (leftMargin < childRight && leftMargin + buttonWidth > childLeft &&
                         topMargin < childBottom && topMargin + buttonHeight > childTop) {
                     isOverlapping = true;
@@ -149,7 +145,7 @@ public class star_sky extends AppCompatActivity {
         editor.putInt("button_left_" + buttonCount, leftMargin);
         editor.putInt("button_top_" + buttonCount, topMargin);
         editor.putInt("button_memo_id_" + buttonCount, memoId);
-        editor.putInt(MEMO_ID_COUNTER_KEY, memoIdCounter); // memoIdCounterを保存
+        editor.putInt(MEMO_ID_COUNTER_KEY, memoIdCounter);
         editor.apply();
     }
 
@@ -162,7 +158,6 @@ public class star_sky extends AppCompatActivity {
             int topMargin = prefs.getInt("button_top_" + i, 0);
             int memoId = prefs.getInt("button_memo_id_" + i, i);
 
-            // 保存されたボタンを再追加
             ImageButton newImageButton = new ImageButton(this);
             newImageButton.setImageResource(R.drawable.demo);
 
@@ -174,20 +169,13 @@ public class star_sky extends AppCompatActivity {
             params.topMargin = topMargin;
             newImageButton.setLayoutParams(params);
 
-            newImageButton.setOnClickListener(v -> openMemoScreen(memoId));
+            newImageButton.setOnClickListener(v -> openMemoScreen(memoId, null));
 
             buttonContainer.addView(newImageButton);
 
-            // memoIdCounterの更新
             if (memoId > memoIdCounter) {
                 memoIdCounter = memoId;
             }
         }
-    }
-
-    private void openMemoScreen(int memoId) {
-        Intent intent = new Intent(star_sky.this, Memo.class);
-        intent.putExtra("MEMO_ID", memoId);
-        startActivity(intent);
     }
 }

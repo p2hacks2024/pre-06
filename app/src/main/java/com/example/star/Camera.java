@@ -1,7 +1,6 @@
 package com.example.star;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,11 +26,15 @@ public class Camera extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Uri photoUri;
+    private int memoIdCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        // star_skyクラスからmemoIdCounterを受け取る
+        memoIdCounter = getIntent().getIntExtra("MEMO_ID_COUNTER", 0);
 
         Button captureButton = findViewById(R.id.capture_button);
         captureButton.setOnClickListener(v -> dispatchTakePictureIntent());
@@ -50,21 +53,6 @@ public class Camera extends AppCompatActivity {
         });
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    // 既存のコードに加え、以下のメソッドを追加
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -80,9 +68,11 @@ public class Camera extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+
             if (imageBitmap != null) {
                 ImageView imageView = findViewById(R.id.image_view);
                 imageView.setImageBitmap(imageBitmap);
+
                 saveImageToGallery(imageBitmap);
             } else {
                 Toast.makeText(this, "Failed to capture image.", Toast.LENGTH_SHORT).show();
@@ -93,6 +83,7 @@ public class Camera extends AppCompatActivity {
     private void saveImageToGallery(Bitmap finalBitmap) {
         ContentValues values = new ContentValues();
         String fileName = "Image-" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpg";
+
         values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
@@ -106,10 +97,15 @@ public class Camera extends AppCompatActivity {
                     finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                     out.flush();
                     out.close();
+                    Toast.makeText(this, "Image saved successfully: " + uri, Toast.LENGTH_SHORT).show();
                     photoUri = uri;
+
+                    // memoIdCounterをインクリメント
+                    memoIdCounter++;
 
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("PHOTO_URI", photoUri.toString());
+                    resultIntent.putExtra("MEMO_ID", memoIdCounter);
                     setResult(RESULT_OK, resultIntent);
                     finish();
                 }
@@ -122,4 +118,16 @@ public class Camera extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

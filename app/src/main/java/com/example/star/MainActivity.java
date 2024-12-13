@@ -1,12 +1,7 @@
 package com.example.star;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,27 +12,36 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+
+        GridLayout gridLayout = findViewById(R.id.gridLayout);
+        int totalButtons = 15;
+
+        //初期画面配列作成
+
+        for(int i = 0; i<totalButtons; i++){
+            ImageButton imageButton = new ImageButton(this);
+
+
+            imageButton.setLayoutParams(new ViewGroup.LayoutParams(350,350));
+            imageButton.setImageResource(R.drawable.demo1);
+            imageButton.setId(View.generateViewId());
+            imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // ボタンがクリックされたときの処理をここに記述
+                    Toast.makeText(MainActivity.this, "Button clicked!", Toast.LENGTH_SHORT).show();
+                }
+
         });
+            gridLayout.addView(imageButton);
+        }
 
-        ImageButton toFile01 = (ImageButton) findViewById(R.id.imageButton4);
-        toFile01.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, star_sky.class);
-                startActivity(intent);
-            }
-        });
-
-
+        }
     }
-
-}
 
 

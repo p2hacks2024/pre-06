@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     tools:context=".Camera">
 
+
+
     <Button
         android:id="@+id/capture_button"
         android:layout_width="wrap_content"

@@ -66,6 +66,8 @@ public class Camera extends AppCompatActivity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } else {
+            Toast.makeText(this, "No camera app available", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -75,34 +77,46 @@ public class Camera extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView imageView = findViewById(R.id.image_view);
-            imageView.setImageBitmap(imageBitmap);
 
-            // Save the image
-            saveImageToGallery(imageBitmap);
+            if (imageBitmap != null) {
+                ImageView imageView = findViewById(R.id.image_view);
+                imageView.setImageBitmap(imageBitmap);
+
+                // Save the image using MediaStore
+                saveImageToGallery(imageBitmap);
+            } else {
+                Toast.makeText(this, "Failed to capture image.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     private void saveImageToGallery(Bitmap finalBitmap) {
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.DISPLAY_NAME, "Image-" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpg");
+        String fileName = "Image-" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpg";
+
+        // 保存先を定義
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES); // Pictures フォルダに保存
 
         Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        try {
-            OutputStream out = getContentResolver().openOutputStream(uri);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            if (out != null) {
-                out.flush();
-                out.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        // 新たにファイル保存場所をログに表示
-        Log.d("CameraActivity", "Image saved at: " + uri.toString());
+        if (uri != null) {
+            try {
+                OutputStream out = getContentResolver().openOutputStream(uri);
+                if (out != null) {
+                    finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                    out.flush();
+                    out.close();
+                    Toast.makeText(this, "Image saved successfully: " + uri, Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed to save image.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Failed to create MediaStore entry.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

@@ -29,6 +29,13 @@
             android:name=".Memo"
             android:exported="false" />
         <activity
+            android:name=".Animation"
+            android:exported="false" />
+        <activity
+            android:name=".AnimationTwo"
+            android:exported="false" />
+
+        <activity
             android:name=".HowToUse"
             android:exported="false" />
         <activity

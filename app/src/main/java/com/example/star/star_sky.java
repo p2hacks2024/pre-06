@@ -49,8 +49,17 @@ public class star_sky extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         memoIdCounter = prefs.getInt(MEMO_ID_COUNTER_KEY, 0);
 
-        Button addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(v -> addNewButton(null));  // URI引数なしで呼び出し
+        //Button addButton = findViewById(R.id.addButton);
+        //addButton.setOnClickListener(v -> addNewButton(null));  // URI引数なしで呼び出し
+
+        Button addButton = (Button) findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(star_sky.this, Animation.class);
+                startActivity(intent);
+            }
+        });
+
 
         ImageButton toFile01 = findViewById(R.id.cameraButton);
         toFile01.setOnClickListener(v -> {

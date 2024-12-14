@@ -5,13 +5,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import android.os.Handler;
 
 public class Animation extends AppCompatActivity {
     @Override
@@ -26,8 +27,8 @@ public class Animation extends AppCompatActivity {
         star.setId(View.generateViewId());
         star.setImageResource(R.drawable.star); // 星の画像を設定
 
-        // 星の初期サイズを大きく設定
-        int initialSize = 2000; // 初期サイズを適切な大きさに設定
+        // 星の初期サイズを設定
+        int initialSize = 900; // 初期サイズを適切な大きさに設定
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(initialSize, initialSize);
         star.setLayoutParams(params);
 
@@ -44,7 +45,7 @@ public class Animation extends AppCompatActivity {
                 ConstraintSet.TOP,
                 mainLayout.getId(),
                 ConstraintSet.TOP,
-                0 // 初期位置を画面内に設定 (画面上部から0)
+                0 // 初期位置 (画面の上部)
         );
         constraintSet.connect(star.getId(), ConstraintSet.START, mainLayout.getId(), ConstraintSet.START, 0);
         constraintSet.connect(star.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 0);
@@ -55,6 +56,7 @@ public class Animation extends AppCompatActivity {
         // 星のアニメーションを実行
         animateStarMovementAndResize(star);
 
+        // 次のアクティビティに遷移
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -64,14 +66,20 @@ public class Animation extends AppCompatActivity {
                 finish(); // 現在のアクティビティを終了
             }
         }, 3000); // 3000ミリ秒（3秒）の遅延
-
     }
 
     private void animateStarMovementAndResize(ImageView star) {
-        // アニメーションで星を下に動かす
-        int finalTopMargin = 1200; // 最終的な位置（画面下部から少し上）
+        // 画面の高さを取得
+        int screenHeight = getResources().getDisplayMetrics().heightPixels;
+
+        // 星の高さを取得
+        int starHeight = star.getLayoutParams().height;
+
+        // 星が画面下側中央に止まるように位置を計算
+        int finalTopMargin = screenHeight - (starHeight / 2) - 245; // 余白を100px残す
+
         ValueAnimator animator = ValueAnimator.ofInt(0, finalTopMargin); // 初期位置から最終位置まで
-        animator.setDuration(2000); // 2秒で移動
+        animator.setDuration(1000); // 2秒で移動
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
 
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -86,16 +94,17 @@ public class Animation extends AppCompatActivity {
                 star.setLayoutParams(params);
 
                 // 星のサイズを縮小
-                float scale = 1 - (0.84f * fraction); // サイズを40%まで縮小
+                float scale = 1 - (0.67f * fraction); // サイズを50%まで縮小
                 star.setScaleX(scale);
                 star.setScaleY(scale);
             }
         });
-        // アニメーションの終了時に星を非表示にする
+
+        // アニメーションの終了時処理
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                star.setVisibility(View.GONE);
+                // アニメーション終了時も星はそのまま残す
             }
         });
 

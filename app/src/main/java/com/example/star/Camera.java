@@ -8,8 +8,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -39,11 +39,8 @@ public class Camera extends AppCompatActivity {
         ImageButton captureButton = findViewById(R.id.capture_button);
         captureButton.setOnClickListener(v -> dispatchTakePictureIntent());
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CAMERA},
-                    1);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
         }
 
         ImageButton backButton = findViewById(R.id.backButton);
@@ -99,6 +96,20 @@ public class Camera extends AppCompatActivity {
 
                     // memoIdCounterをインクリメント
                     memoIdCounter++;
+
+                    // 3秒後にAnimationTwoクラスに遷移するためのHandlerを使用
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(Camera.this, AnimationTwo.class);
+                            intent.putExtra("PHOTO_URI", photoUri.toString());
+                            intent.putExtra("MEMO_ID", memoIdCounter);
+                            startActivity(intent);
+
+                            // 現在のアクティビティを終了
+                            //finish();
+                        }
+                    }, 100); // 100ミリ秒（0.1秒）の遅延
 
                     // 結果を返すIntent
                     Intent resultIntent = new Intent();

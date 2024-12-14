@@ -51,11 +51,6 @@ public class star_sky extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         memoIdCounter = prefs.getInt(MEMO_ID_COUNTER_KEY, 0);
 
-        ImageButton addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(v -> {
-            memoIdCounter++;
-            addNewButton(memoIdCounter, null);  // 新しいメモIDを生成してURIはnullで呼び出し
-        });
 
         ImageButton toFile01 = findViewById(R.id.cameraButton);
         toFile01.setOnClickListener(v -> {
@@ -64,11 +59,6 @@ public class star_sky extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         });
 
-        ImageButton toHome = findViewById(R.id.toHomeButton);
-        toHome.setOnClickListener(v -> {
-            Intent intent = new Intent(star_sky.this, com.example.star.File.class);
-            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-        });
 
         loadButtons();
     }

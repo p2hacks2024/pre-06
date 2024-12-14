@@ -70,7 +70,7 @@ public class Memo extends AppCompatActivity {
                     // Animationクラスに変更
                     startActivity(intent);
                 }
-            }, 3000); // 3000ミリ秒（3秒）の遅延
+            }, 2000); // 2000ミリ秒（2秒）の遅延
         });
 
         modoruButton.setOnClickListener(v -> {

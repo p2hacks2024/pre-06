@@ -6,40 +6,44 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+
+
+    <!--android:layout_marginTop="200dp"-->
+
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="347dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"
+        android:layout_marginTop="220dp"
         android:contentDescription="Selected Image" />
 
     <EditText
         android:id="@+id/editTextNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Write your note here"
-        android:layout_marginTop="16dp"
-        android:padding="8dp"/>
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:textColorHint="#FDF6ED"
+        android:hint="星の名前"
+        android:padding="8dp" />
 
     <Button
         android:id="@+id/selectImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:text="Select Image" />
 
     <Button
         android:id="@+id/kanryouButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:text="完了" />
 
     <Button
         android:id="@+id/modoruButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:text="戻る" />
 
 </LinearLayout>

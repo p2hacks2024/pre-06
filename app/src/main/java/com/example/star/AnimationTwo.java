@@ -1,3 +1,4 @@
+
 package com.example.star;
 
 import android.content.Intent;
@@ -15,8 +16,9 @@ public class AnimationTwo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.animation_two);
 
-        // ImageViewの参照を取得
-        ImageView starImage = findViewById(R.id.starImage);
+        // Intent から写真 URI とメモ ID を取得
+        String photoUriString = getIntent().getStringExtra("PHOTO_URI");
+        int memoId = getIntent().getIntExtra("MEMO_ID", -1);
 
         // スケールアニメーションを作成
         ScaleAnimation scaleAnimation = new ScaleAnimation(
@@ -28,18 +30,19 @@ public class AnimationTwo extends AppCompatActivity {
         scaleAnimation.setDuration(3000); // アニメーションの持続時間（ミリ秒）
         scaleAnimation.setFillAfter(true); // アニメーション終了後も状態を保持
 
-        // アニメーションをImageViewに適用
+        // ImageViewの参照を取得してアニメーションを適用
+        ImageView starImage = findViewById(R.id.starImage);
         starImage.startAnimation(scaleAnimation);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(com.example.star.AnimationTwo.this, Memo.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(AnimationTwo.this, Memo.class);
+                intent.putExtra("PHOTO_URI", photoUriString);
+                intent.putExtra("MEMO_ID", memoId);
                 startActivity(intent);
                 finish(); // 現在のアクティビティを終了
             }
         }, 3000); // 3000ミリ秒（3秒）の遅延
-
     }
 }

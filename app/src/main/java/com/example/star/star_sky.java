@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -49,12 +48,6 @@ public class star_sky extends AppCompatActivity {
         buttonContainer = findViewById(R.id.buttonContainer);
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         memoIdCounter = prefs.getInt(MEMO_ID_COUNTER_KEY, 0);
-
-        ImageButton addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(v -> {
-            memoIdCounter++;
-            addNewButton(memoIdCounter, null);  // 新しいメモIDを生成してURIはnullで呼び出し
-        });
 
         ImageButton toFile01 = findViewById(R.id.cameraButton);
         toFile01.setOnClickListener(v -> {
@@ -164,7 +157,7 @@ public class star_sky extends AppCompatActivity {
             int memoId = prefs.getInt("button_memo_id_" + i, i);
 
             ImageButton newImageButton = new ImageButton(this);
-            newImageButton.setImageResource(R.drawable.demo);
+            newImageButton.setImageResource(R.drawable.star);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     100,  // 幅を100ピクセルに設定

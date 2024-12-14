@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">star</string>
+    <string name="app_name">星の記憶</string>
     <string name="tv_question">星空一覧</string>
     <string name="tv_answer1">東から</string>
     <string name="tv_answer2">西から</string>

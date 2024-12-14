@@ -1,4 +1,5 @@
 
+
 package com.example.star;
 
 import android.content.Intent;
@@ -22,12 +23,12 @@ public class AnimationTwo extends AppCompatActivity {
 
         // スケールアニメーションを作成
         ScaleAnimation scaleAnimation = new ScaleAnimation(
-                0.01f, 6.0f, // X軸の開始スケールと終了スケール
-                0.01f, 6.0f, // Y軸の開始スケールと終了スケール
+                0.01f, 4.3f, // X軸の開始スケールと終了スケール
+                0.01f, 4.3f, // Y軸の開始スケールと終了スケール
                 Animation.RELATIVE_TO_SELF, 0.5f, // ピボットX（中央）
-                Animation.RELATIVE_TO_SELF, 0.5f  // ピボットY（中央）
+                Animation.RELATIVE_TO_SELF, 0.9f  // ピボットY（中央）
         );
-        scaleAnimation.setDuration(3000); // アニメーションの持続時間（ミリ秒）
+        scaleAnimation.setDuration(1000); // アニメーションの持続時間（ミリ秒）
         scaleAnimation.setFillAfter(true); // アニメーション終了後も状態を保持
 
         // ImageViewの参照を取得してアニメーションを適用

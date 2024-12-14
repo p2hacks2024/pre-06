@@ -36,13 +36,7 @@ public class File extends AppCompatActivity {
         });
 
 
-        ImageButton back2 = (ImageButton) findViewById(R.id.back2);
-        back2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(File.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
 }

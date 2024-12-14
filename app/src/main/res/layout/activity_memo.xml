@@ -11,50 +11,47 @@
         android:id="@+id/imageView"
         android:layout_width="215dp"
         android:layout_height="215dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginLeft="62dp"
+        android:layout_marginTop="175dp"
+        android:layout_marginLeft="55dp"
         android:background="@android:color/transparent"
         android:contentDescription="Selected Image"
         android:scaleType="fitCenter"/>
-
 
 
     <EditText
         android:id="@+id/editTextNote"
         android:layout_width="300dp"
         android:layout_height="80dp"
-        android:layout_marginTop="430dp"
         android:layout_marginLeft="18dp"
+        android:layout_marginTop="450dp"
         android:background="@color/custom_white2"
-        android:textSize="20dp"
         android:hint="星の名前を入力してください"
         android:padding="8dp"
-        android:textColor="@color/custom_white" />
+        android:textColor="@color/custom_white"
+        android:textSize="20dp" />
 
+    <ImageButton
+        android:id="@+id/modoruButton"
+        android:layout_width="85dp"
+        android:layout_height="78dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/back" />
 
 
     <ImageButton
         android:id="@+id/kanryouButton"
-        android:layout_width="139dp"
-        android:layout_height="wrap_content"
+        android:layout_width="152dp"
+        android:layout_height="126dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="45dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/complete" />
-
-
-    <ImageButton
-        android:id="@+id/modoruButton"
-        android:layout_width="70dp"
-        android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="230dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="35dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/back" />
 
 
 </RelativeLayout>

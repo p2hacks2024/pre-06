@@ -8,35 +8,42 @@
 
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="215dp"
+        android:layout_height="215dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="174dp"
         android:background="@android:color/transparent"
         app:srcCompat="@drawable/picture_preview" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="360dp"
+        android:layout_marginLeft="30dp"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/new_star_question"/>
+        app:srcCompat="@drawable/new_star_question" />
 
     <ImageButton
         android:id="@+id/capture_button"
-        android:layout_width="wrap_content"
+        android:layout_width="139dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="62dp"
         android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/make_star_button" />
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="188dp"
+        android:layout_height="130dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="106dp"
-        android:layout_marginBottom="89dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="28dp"
         android:layout_toEndOf="@+id/capture_button"
         android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
         android:text="back"
         app:srcCompat="@drawable/back2" />
 

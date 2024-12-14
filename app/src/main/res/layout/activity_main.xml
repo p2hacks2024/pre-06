@@ -13,11 +13,11 @@
         android:id="@+id/how_to_use"
         android:layout_width="185dp"
         android:layout_height="116dp"
-        android:layout_marginEnd="92dp"
         android:background="@android:color/transparent"
         android:text="how To Use"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.778"
         app:srcCompat="@drawable/how_to_use" />

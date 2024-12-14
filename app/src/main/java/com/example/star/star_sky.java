@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -93,10 +94,11 @@ public class star_sky extends AppCompatActivity {
         ImageButton newImageButton = new ImageButton(this);
         newImageButton.setImageResource(R.drawable.star); // デフォルトの画像
         newImageButton.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+        newImageButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                300,  // 幅を100ピクセルに設定
-                300   // 高さを100ピクセルに設定
+                150,  // 幅を100ピクセルに設定
+                150   // 高さを100ピクセルに設定
         );
 
         int[] position = findNonOverlappingPosition(params.width, params.height);
@@ -173,10 +175,11 @@ public class star_sky extends AppCompatActivity {
             ImageButton newImageButton = new ImageButton(this);
             newImageButton.setBackgroundColor(android.graphics.Color.TRANSPARENT);
             newImageButton.setImageResource(R.drawable.star);
+            newImageButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                    300,  // 幅を100ピクセルに設定
-                    300   // 高さを100ピクセルに設定
+                    150,  // 幅を100ピクセルに設定
+                    150   // 高さを100ピクセルに設定
             );
             params.leftMargin = leftMargin;
             params.topMargin = topMargin;

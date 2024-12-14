@@ -2,7 +2,6 @@ package com.example.star;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
@@ -19,6 +18,9 @@ public class AnimationTwo extends AppCompatActivity {
         // ImageViewの参照を取得
         ImageView starImage = findViewById(R.id.starImage);
 
+        // ImageViewを最初に非表示（描画のみオフ）に設定
+        starImage.setVisibility(View.INVISIBLE);
+
         // スケールアニメーションを作成
         ScaleAnimation scaleAnimation = new ScaleAnimation(
                 0.01f, 6.0f, // X軸の開始スケールと終了スケール
@@ -29,21 +31,17 @@ public class AnimationTwo extends AppCompatActivity {
         scaleAnimation.setDuration(3000); // アニメーションの持続時間（ミリ秒）
         scaleAnimation.setFillAfter(true); // アニメーション終了後も状態を保持
 
-        // アニメーションをImageViewに適用
-        starImage.startAnimation(scaleAnimation);
-
-        // アニメーション開始時にImageViewを非表示にする
+        // アニメーションのリスナーを設定
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                // アニメーション開始時の処理
-                starImage.setVisibility(View.GONE);
+                // アニメーション開始時にImageViewを表示
+                starImage.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 // アニメーション終了時の処理
-                // Memoクラスに遷移
                 Intent intent = new Intent(AnimationTwo.this, Memo.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -55,5 +53,8 @@ public class AnimationTwo extends AppCompatActivity {
                 // アニメーション繰り返し時の処理
             }
         });
+
+        // アニメーションをImageViewに適用
+        starImage.startAnimation(scaleAnimation);
     }
 }

@@ -58,14 +58,18 @@ public class Memo extends AppCompatActivity {
             startActivityForResult(intent, PICK_IMAGE);
         });
 
-        /*kanryouButton.setOnClickListener(v -> {
+        kanryouButton.setOnClickListener(v -> {
             saveMemo();
             Intent intent = new Intent(Memo.this, star_sky.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-        });*/
-        kanryouButton.setOnClickListener(v -> {
-            //saveMemo();
+        });
+
+        modoruButton.setOnClickListener(v -> {
+            saveMemo();
+            Intent intent = new Intent(Memo.this, star_sky.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
             // 3秒後に画面を切り替える
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -73,15 +77,6 @@ public class Memo extends AppCompatActivity {
                     Intent intent = new Intent(Memo.this, Animation.class);
                     // Animationクラスに変更
                     startActivity(intent); } }, 3000); // 3000ミリ秒（3秒）の遅延
-            });
-
-        modoruButton.setOnClickListener(v -> {
-            saveMemo();
-            // 同じメモ画面に遷移するが、別の動作（例：特定のデータを送るなど）を追加
-            Intent intent = new Intent(Memo.this, star_sky.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            // ここに追加の動作を設定できます
-            startActivity(intent);
         });
 
         loadMemo(); // ここでメモを読み込みます

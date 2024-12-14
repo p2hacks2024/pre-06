@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,9 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsCompat.Type;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Random;
 
 public class star_sky extends AppCompatActivity {
@@ -49,18 +50,11 @@ public class star_sky extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         memoIdCounter = prefs.getInt(MEMO_ID_COUNTER_KEY, 0);
 
-        //Button addButton = findViewById(R.id.addButton);
-        //addButton.setOnClickListener(v -> addNewButton(null));  // URI引数なしで呼び出し
-
-        ImageButton addButton = (ImageButton) findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-               // Intent intent = new Intent(star_sky.this, Animation.class);
-                // startActivity(intent);
-                addNewButton(null);
-            }
+        ImageButton addButton = findViewById(R.id.addButton);
+        addButton.setOnClickListener(v -> {
+            memoIdCounter++;
+            addNewButton(memoIdCounter, null);  // 新しいメモIDを生成してURIはnullで呼び出し
         });
-
 
         ImageButton toFile01 = findViewById(R.id.cameraButton);
         toFile01.setOnClickListener(v -> {
@@ -81,7 +75,7 @@ public class star_sky extends AppCompatActivity {
 
             if (photoUriString != null && memoId != -1) {
                 Uri photoUri = Uri.parse(photoUriString);
-                addNewButton(photoUri);  // ボタンの追加
+                addNewButton(memoId, photoUri);  // 正しい引数を渡す
 
                 // メモ画面に遷移する
                 openMemoScreen(memoId, photoUri);
@@ -89,14 +83,13 @@ public class star_sky extends AppCompatActivity {
         }
     }
 
-    private void addNewButton(@Nullable Uri photoUri) {
+    private void addNewButton(int memoId, @Nullable Uri photoUri) {
         ImageButton newImageButton = new ImageButton(this);
-        newImageButton.setImageResource(R.drawable.star); // デフォルトの画像
-        newImageButton.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+        newImageButton.setImageResource(R.drawable.demo); // デフォルトの画像
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                300,  // 幅を100ピクセルに設定
-                300   // 高さを100ピクセルに設定
+                100,  // 幅を100ピクセルに設定
+                100   // 高さを100ピクセルに設定
         );
 
         int[] position = findNonOverlappingPosition(params.width, params.height);
@@ -104,7 +97,6 @@ public class star_sky extends AppCompatActivity {
         params.topMargin = position[1];
         newImageButton.setLayoutParams(params);
 
-        final int memoId = memoIdCounter; // 更新前のカウンター値を使う
         newImageButton.setOnClickListener(v -> openMemoScreen(memoId, photoUri));
 
         buttonContainer.addView(newImageButton);
@@ -175,21 +167,49 @@ public class star_sky extends AppCompatActivity {
             newImageButton.setImageResource(R.drawable.star);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                    300,  // 幅を100ピクセルに設定
-                    300   // 高さを100ピクセルに設定
+                    100,  // 幅を100ピクセルに設定
+                    100   // 高さを100ピクセルに設定
             );
             params.leftMargin = leftMargin;
             params.topMargin = topMargin;
             newImageButton.setLayoutParams(params);
 
             newImageButton.setOnClickListener(v -> openMemoScreen(memoId, null));
-            newImageButton.setBackgroundColor(android.graphics.Color.TRANSPARENT);
 
             buttonContainer.addView(newImageButton);
+
+            // メモが存在する場合にロードする
+            if (doesMemoExist(memoId)) {
+                loadMemo(memoId, newImageButton);
+            }
 
             if (memoId > memoIdCounter) {
                 memoIdCounter = memoId;
             }
+        }
+    }
+
+    private boolean doesMemoExist(int memoId) {
+        File noteFile = new File(getFilesDir(), "note_" + memoId + ".txt");
+        File imageFile = new File(getFilesDir(), "image_" + memoId + ".png");
+        return noteFile.exists() && imageFile.exists();
+    }
+
+    private void loadMemo(int memoId, ImageButton button) {
+        try {
+            FileInputStream noteStream = openFileInput("note_" + memoId + ".txt");
+            byte[] noteBytes = new byte[noteStream.available()];
+            noteStream.read(noteBytes);
+            noteStream.close();
+            String note = new String(noteBytes);
+
+            FileInputStream imageStream = openFileInput("image_" + memoId + ".png");
+            Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+            imageStream.close();
+
+            button.setOnClickListener(v -> openMemoScreen(memoId, null));
+        } catch (IOException e) {
+            Toast.makeText(this, "メモの読み込みに失敗しました", Toast.LENGTH_SHORT).show();
         }
     }
 }

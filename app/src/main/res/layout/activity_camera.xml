@@ -25,26 +25,25 @@
 
     <ImageButton
         android:id="@+id/capture_button"
+        android:layout_width="188dp"
+        android:layout_height="130dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="28dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/make_star_button" />
+
+    <ImageButton
+        android:text="back"
+        android:id="@+id/backButton"
         android:layout_width="139dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="62dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/make_star_button" />
-
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="188dp"
-        android:layout_height="130dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="74dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="28dp"
-        android:layout_toEndOf="@+id/capture_button"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        android:text="back"
         app:srcCompat="@drawable/back2" />
 
 </RelativeLayout>

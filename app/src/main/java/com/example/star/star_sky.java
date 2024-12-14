@@ -51,6 +51,12 @@ public class star_sky extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         memoIdCounter = prefs.getInt(MEMO_ID_COUNTER_KEY, 0);
 
+        ImageButton toHome = findViewById(R.id.toHomeButton);
+        toHome.setOnClickListener(v -> {
+            Intent intent = new Intent(star_sky.this, com.example.star.File.class);
+            intent.putExtra("MEMO_ID_COUNTER", memoIdCounter);
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        });
 
         ImageButton toFile01 = findViewById(R.id.cameraButton);
         toFile01.setOnClickListener(v -> {

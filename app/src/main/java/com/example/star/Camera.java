@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -108,7 +109,13 @@ public class Camera extends AppCompatActivity {
                     resultIntent.putExtra("PHOTO_URI", photoUri.toString());
                     resultIntent.putExtra("MEMO_ID", memoIdCounter);
                     setResult(RESULT_OK, resultIntent);
-                    finish();
+
+
+                            Intent intent = new Intent(Camera.this, AnimationTwo.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish(); // 現在のアクティビティを終了
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();

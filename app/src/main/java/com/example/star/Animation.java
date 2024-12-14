@@ -58,7 +58,7 @@ public class Animation extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Animation.this, AnimationTwo.class);
+                Intent intent = new Intent(Animation.this, AnimationThree.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish(); // 現在のアクティビティを終了

@@ -34,7 +34,7 @@ public class AnimationTwo extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(com.example.star.AnimationTwo.this, star_sky.class);
+                Intent intent = new Intent(com.example.star.AnimationTwo.this, Memo.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish(); // 現在のアクティビティを終了

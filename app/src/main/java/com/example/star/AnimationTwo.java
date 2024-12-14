@@ -1,12 +1,13 @@
+
 package com.example.star;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
 
 public class AnimationTwo extends AppCompatActivity {
 
@@ -15,11 +16,9 @@ public class AnimationTwo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.animation_two);
 
-        // ImageViewの参照を取得
-        ImageView starImage = findViewById(R.id.starImage);
-
-        // ImageViewを最初に非表示（描画のみオフ）に設定
-        starImage.setVisibility(View.INVISIBLE);
+        // Intent から写真 URI とメモ ID を取得
+        String photoUriString = getIntent().getStringExtra("PHOTO_URI");
+        int memoId = getIntent().getIntExtra("MEMO_ID", -1);
 
         // スケールアニメーションを作成
         ScaleAnimation scaleAnimation = new ScaleAnimation(
@@ -31,30 +30,19 @@ public class AnimationTwo extends AppCompatActivity {
         scaleAnimation.setDuration(3000); // アニメーションの持続時間（ミリ秒）
         scaleAnimation.setFillAfter(true); // アニメーション終了後も状態を保持
 
-        // アニメーションのリスナーを設定
-        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                // アニメーション開始時にImageViewを表示
-                starImage.setVisibility(View.VISIBLE);
-            }
+        // ImageViewの参照を取得してアニメーションを適用
+        ImageView starImage = findViewById(R.id.starImage);
+        starImage.startAnimation(scaleAnimation);
 
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onAnimationEnd(Animation animation) {
-                // アニメーション終了時の処理
+            public void run() {
                 Intent intent = new Intent(AnimationTwo.this, Memo.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("PHOTO_URI", photoUriString);
+                intent.putExtra("MEMO_ID", memoId);
                 startActivity(intent);
                 finish(); // 現在のアクティビティを終了
             }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-                // アニメーション繰り返し時の処理
-            }
-        });
-
-        // アニメーションをImageViewに適用
-        starImage.startAnimation(scaleAnimation);
+        }, 3000); // 3000ミリ秒（3秒）の遅延
     }
 }

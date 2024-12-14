@@ -25,11 +25,13 @@
         android:id="@+id/back2"
         android:layout_width="68dp"
         android:layout_height="121dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="37dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/back"
-        tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="714dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

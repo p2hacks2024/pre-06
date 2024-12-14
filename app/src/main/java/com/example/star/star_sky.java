@@ -59,6 +59,12 @@ public class star_sky extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         });
 
+        ImageButton toHome = findViewById(R.id.toHomeButton);
+        toHome.setOnClickListener(v -> {
+            Intent intent = new Intent(star_sky.this, com.example.star.File.class);
+            intent.putExtra("MEMO_ID_COUNTER", memoIdCounter);
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        });
 
         loadButtons();
     }

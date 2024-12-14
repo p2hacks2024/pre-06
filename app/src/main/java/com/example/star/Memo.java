@@ -66,10 +66,8 @@ public class Memo extends AppCompatActivity {
 
         modoruButton.setOnClickListener(v -> {
             saveMemo();
-            // 同じメモ画面に遷移するが、別の動作（例：特定のデータを送るなど）を追加
             Intent intent = new Intent(Memo.this, star_sky.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            // ここに追加の動作を設定できます
             startActivity(intent);
         });
 

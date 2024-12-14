@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -70,9 +69,6 @@ public class Camera extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
             if (imageBitmap != null) {
-                ImageView imageView = findViewById(R.id.image_view);
-                imageView.setImageBitmap(imageBitmap);
-
                 saveImageToGallery(imageBitmap);
             } else {
                 Toast.makeText(this, "Failed to capture image.", Toast.LENGTH_SHORT).show();

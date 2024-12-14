@@ -9,19 +9,6 @@
     tools:context=".star_sky">
 
 
-
-
-    <ImageButton
-        android:id="@+id/toHomeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="336dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back"
-        android:background="@android:color/transparent"/>
-
     <ImageButton
         android:id="@+id/starButton"
         android:layout_width="wrap_content"
@@ -37,32 +24,57 @@
         android:id="@+id/buttonContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:background="@android:color/transparent">
 
         <ImageButton
             android:id="@+id/cameraButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_width="109dp"
+            android:layout_height="58dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="-14dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="306dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="125dp"
+            android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/camera_ikon" />
+            app:srcCompat="@drawable/camera_ikon3" />
 
         <ImageButton
             android:id="@+id/addButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="249dp"
-            android:layout_marginTop="607dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/getpicture_ikon" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4"
+            app:srcCompat="@drawable/getpicture" />
+
+        <ImageButton
+            android:id="@+id/toHomeButton"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="8dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.15"
+
+            app:srcCompat="@drawable/back" />
         <!--写真取り込み機能は入れてません-->
     </RelativeLayout>
 

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,7 +36,7 @@ public class Camera extends AppCompatActivity {
         // star_skyクラスからmemoIdCounterを受け取る
         memoIdCounter = getIntent().getIntExtra("MEMO_ID_COUNTER", 0);
 
-        Button captureButton = findViewById(R.id.capture_button);
+        ImageButton captureButton = findViewById(R.id.capture_button);
         captureButton.setOnClickListener(v -> dispatchTakePictureIntent());
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -45,7 +46,7 @@ public class Camera extends AppCompatActivity {
                     1);
         }
 
-        Button backButton = findViewById(R.id.backButton);
+        ImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(Camera.this, star_sky.class);
             startActivity(intent);

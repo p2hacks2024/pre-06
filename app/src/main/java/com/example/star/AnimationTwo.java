@@ -7,6 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
 
 public class AnimationTwo extends AppCompatActivity {
 
@@ -31,15 +32,28 @@ public class AnimationTwo extends AppCompatActivity {
         // アニメーションをImageViewに適用
         starImage.startAnimation(scaleAnimation);
 
-        new Handler().postDelayed(new Runnable() {
+        // アニメーション開始時にImageViewを非表示にする
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void run() {
-                Intent intent = new Intent(com.example.star.AnimationTwo.this, Memo.class);
+            public void onAnimationStart(Animation animation) {
+                // アニメーション開始時の処理
+                starImage.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // アニメーション終了時の処理
+                // Memoクラスに遷移
+                Intent intent = new Intent(AnimationTwo.this, Memo.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish(); // 現在のアクティビティを終了
             }
-        }, 3000); // 3000ミリ秒（3秒）の遅延
 
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                // アニメーション繰り返し時の処理
+            }
+        });
     }
 }

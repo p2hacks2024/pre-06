@@ -23,10 +23,13 @@
 
     <ImageButton
         android:id="@+id/back2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="68dp"
+        android:layout_height="121dp"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/back"/>
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/back"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="714dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

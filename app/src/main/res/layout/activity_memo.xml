@@ -9,43 +9,34 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="347dp"
+        android:layout_width="330dp"
+        android:layout_height="277dp"
         android:layout_gravity="center"
-        android:contentDescription="Selected Image" />
+        android:layout_marginTop="230dp"
+        android:contentDescription="Selected Image"
+        android:scaleType="fitCenter" />
 
     <EditText
         android:id="@+id/editTextNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="90dp"
+        android:background="@color/custom_white2"
+        android:hint="星の名前を入力してください"
         android:padding="8dp"
-        android:textColor="@color/custom_white"
-        android:hint="星の名前を入力してください"/>
-
-    <ImageButton
-        android:id="@+id/selectImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Select Image"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/getpicture"/>
+        android:textColor="@color/custom_white" />
 
     <ImageButton
         android:id="@+id/kanryouButton"
-        android:layout_width="wrap_content"
+        android:layout_width="144dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/complete" />
 
     <ImageButton
         android:id="@+id/modoruButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/back" />
+
 
 </LinearLayout>

@@ -37,7 +37,7 @@ public class Memo extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         editTextNote = findViewById(R.id.editTextNote);
-        ImageButton selectImageButton = findViewById(R.id.selectImageButton);
+
         ImageButton kanryouButton = findViewById(R.id.kanryouButton);
         ImageButton modoruButton = findViewById(R.id.modoruButton);
 
@@ -54,10 +54,6 @@ public class Memo extends AppCompatActivity {
             }
         }
 
-        selectImageButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, PICK_IMAGE);
-        });
 
         kanryouButton.setOnClickListener(v -> {
             saveMemo();

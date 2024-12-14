@@ -171,6 +171,7 @@ public class star_sky extends AppCompatActivity {
             int memoId = prefs.getInt("button_memo_id_" + i, i);
 
             ImageButton newImageButton = new ImageButton(this);
+            newImageButton.setBackgroundColor(android.graphics.Color.TRANSPARENT);
             newImageButton.setImageResource(R.drawable.star);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(

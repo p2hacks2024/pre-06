@@ -85,7 +85,7 @@ public class star_sky extends AppCompatActivity {
 
     private void addNewButton(int memoId, @Nullable Uri photoUri) {
         ImageButton newImageButton = new ImageButton(this);
-        newImageButton.setImageResource(R.drawable.demo); // デフォルトの画像
+        newImageButton.setImageResource(R.drawable.star); // デフォルトの画像
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 100,  // 幅を100ピクセルに設定
@@ -164,7 +164,7 @@ public class star_sky extends AppCompatActivity {
             int memoId = prefs.getInt("button_memo_id_" + i, i);
 
             ImageButton newImageButton = new ImageButton(this);
-            newImageButton.setImageResource(R.drawable.star);
+            newImageButton.setImageResource(R.drawable.demo);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     100,  // 幅を100ピクセルに設定

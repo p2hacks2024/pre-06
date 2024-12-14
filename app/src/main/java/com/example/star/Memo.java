@@ -60,9 +60,20 @@ public class Memo extends AppCompatActivity {
 
         kanryouButton.setOnClickListener(v -> {
             saveMemo();
+            /*
             Intent intent = new Intent(Memo.this, star_sky.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            */
+            // 3秒後に画面を切り替える
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(Memo.this, Animation.class);
+                    // Animationクラスに変更
+                    startActivity(intent);
+                }
+            }, 3000); // 3000ミリ秒（3秒）の遅延
         });
 
         modoruButton.setOnClickListener(v -> {
@@ -70,13 +81,6 @@ public class Memo extends AppCompatActivity {
             Intent intent = new Intent(Memo.this, star_sky.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            // 3秒後に画面を切り替える
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(Memo.this, Animation.class);
-                    // Animationクラスに変更
-                    startActivity(intent); } }, 3000); // 3000ミリ秒（3秒）の遅延
         });
 
         loadMemo(); // ここでメモを読み込みます

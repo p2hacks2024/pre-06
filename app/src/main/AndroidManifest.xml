@@ -34,6 +34,9 @@
         <activity
             android:name=".AnimationTwo"
             android:exported="false" />
+        <activity
+            android:name=".AnimationThree"
+            android:exported="false" />
 
         <activity
             android:name=".HowToUse"

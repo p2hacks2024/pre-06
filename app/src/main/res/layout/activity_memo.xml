@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/star_name"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,29 +18,34 @@
         android:id="@+id/editTextNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Write your note here"
         android:layout_marginTop="16dp"
-        android:padding="8dp"/>
+        android:padding="8dp"
+        android:textColor="@color/custom_white"
+        android:hint="星の名前を入力してください"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/selectImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Select Image" />
+        android:text="Select Image"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/getpicture"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/kanryouButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="完了" />
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/complete" />
 
-    <Button
+    <ImageButton
         android:id="@+id/modoruButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="戻る" />
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/back" />
 
 </LinearLayout>

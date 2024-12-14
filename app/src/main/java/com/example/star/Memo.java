@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -36,9 +37,9 @@ public class Memo extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         editTextNote = findViewById(R.id.editTextNote);
-        Button selectImageButton = findViewById(R.id.selectImageButton);
-        Button kanryouButton = findViewById(R.id.kanryouButton);
-        Button modoruButton = findViewById(R.id.modoruButton);
+        ImageButton selectImageButton = findViewById(R.id.selectImageButton);
+        ImageButton kanryouButton = findViewById(R.id.kanryouButton);
+        ImageButton modoruButton = findViewById(R.id.modoruButton);
 
         // メモIDと写真のURIを取得
         memoId = getIntent().getIntExtra("MEMO_ID", -1);

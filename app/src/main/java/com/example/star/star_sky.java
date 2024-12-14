@@ -63,6 +63,12 @@ public class star_sky extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         });
 
+        ImageButton toHome = findViewById(R.id.toHomeButton);
+        toHome.setOnClickListener(v -> {
+            Intent intent = new Intent(star_sky.this, com.example.star.File.class);
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        });
+
         loadButtons();
     }
 
@@ -86,10 +92,11 @@ public class star_sky extends AppCompatActivity {
     private void addNewButton(int memoId, @Nullable Uri photoUri) {
         ImageButton newImageButton = new ImageButton(this);
         newImageButton.setImageResource(R.drawable.star); // デフォルトの画像
+        newImageButton.setBackgroundColor(android.graphics.Color.TRANSPARENT);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                100,  // 幅を100ピクセルに設定
-                100   // 高さを100ピクセルに設定
+                300,  // 幅を100ピクセルに設定
+                300   // 高さを100ピクセルに設定
         );
 
         int[] position = findNonOverlappingPosition(params.width, params.height);
@@ -164,11 +171,11 @@ public class star_sky extends AppCompatActivity {
             int memoId = prefs.getInt("button_memo_id_" + i, i);
 
             ImageButton newImageButton = new ImageButton(this);
-            newImageButton.setImageResource(R.drawable.demo);
+            newImageButton.setImageResource(R.drawable.star);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                    100,  // 幅を100ピクセルに設定
-                    100   // 高さを100ピクセルに設定
+                    300,  // 幅を100ピクセルに設定
+                    300   // 高さを100ピクセルに設定
             );
             params.leftMargin = leftMargin;
             params.topMargin = topMargin;

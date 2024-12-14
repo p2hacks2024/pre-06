@@ -13,25 +13,25 @@
         android:id="@+id/how_to_use"
         android:layout_width="185dp"
         android:layout_height="116dp"
+        android:layout_marginEnd="92dp"
+        android:background="@android:color/transparent"
         android:text="how To Use"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.698"
-        app:srcCompat="@drawable/how_to_use"
-        android:background="@android:color/transparent"/>
+        app:layout_constraintVertical_bias="0.778"
+        app:srcCompat="@drawable/how_to_use" />
 
     <ImageButton
         android:id="@+id/tap_to_start"
         android:layout_width="301dp"
         android:layout_height="108dp"
-        android:layout_marginBottom="392dp"
+        android:layout_marginBottom="304dp"
+        android:background="@android:color/transparent"
         android:text="Tap To Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/make_star"
-        android:background="@android:color/transparent"/>
+        app:srcCompat="@drawable/makestar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
